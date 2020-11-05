@@ -24,14 +24,17 @@ public class ClienteControllerApi {
         return ResponseEntity.ok().body(obj);
     }
 
-//    @GetMapping("/search")
-//    public ResponseEntity<List<Cliente>> findByNomeOrEmail(@RequestParam(value = "nome", defaultValue = "") String nome,
-//                                                           @RequestParam(value = "email", defaultValue = "") String email)
-//    {
-//
-//        List<Cliente> obj = clienteService.findByNomeOrEmail(nome, email);
-//        return ResponseEntity.ok().body(obj);
-//    }
+    @GetMapping("/search")
+    public ResponseEntity<List<Cliente>> findAllCritiria(@RequestParam(value = "nome", defaultValue = "") String nome,
+                                                         @RequestParam(value = "cpfcnpj", defaultValue = "") String cpfcnpj,
+                                                         @RequestParam(value = "cidade", defaultValue = "") String cidade,
+                                                         @RequestParam(value = "uf", defaultValue = "") String uf
+                                                         )
+    {
+
+        List<Cliente> obj = clienteService.findAllCritiria(nome, cpfcnpj, cidade, uf);
+        return ResponseEntity.ok().body(obj);
+    }
 
 
     @PostMapping

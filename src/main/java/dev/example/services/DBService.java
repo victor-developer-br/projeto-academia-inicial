@@ -42,7 +42,7 @@ public class DBService {
 
         //inserção na tabela clientes
         Cliente cli1 = new Cliente(null, Utilities.ConvertDate("30/08/2020"), "Melânio Albuquerque", "06432730007",
-                "Rua Alfredo Lisboa", "Carpina", "PE", "54932121", "81978795732", "AlfAlb@gmail.com");
+                "Rua Alfredo Lisboa", "Carpina", "SP", "54932121", "81978795732", "AlfAlb@gmail.com");
 
         //criar livro caixa
 
@@ -65,7 +65,7 @@ public class DBService {
         cli2livro2.setCliente(cli2);
 
         Cliente cli3 = new Cliente(null, Utilities.ConvertDate("05/09/2020"), "Fernanda Miranda Costa", "06734336707",
-                "Rua Quarenta e Oito", "Recife", "PE", "54872221", "81978795544", "fecosta@gmail.com");
+                "Rua Quarenta e Oito", "Recife", "RN", "54872221", "81978795544", "fecosta@gmail.com");
 
         //criar livro caixa
 

@@ -3,10 +3,7 @@ package dev.example.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.Objects;
@@ -26,7 +23,9 @@ public class Cliente {
 
     @NotEmpty(message = "Preenchimento Obrigatório")
     @Length(max = 14, message = "Este campo deve conter um máximo de 14 caracteres")
-    private String cpf_Cnpj;
+
+
+    private String cpfcnpj;
     @NotEmpty(message = "Preenchimento Obrigatório")
     @Length(max = 50, message = "Este campo deve conter um máximo de 50 caracteres")
     private String logradouro;
@@ -49,11 +48,11 @@ public class Cliente {
     public Cliente() {
     }
 
-    public Cliente(Integer id, Date dataCadastro, String nome, String cpf_Cnpj, String logradouro, String cidade, String uf, String cep, String telefone, String email) {
+    public Cliente(Integer id, Date dataCadastro, String nome, String cpfcnpj, String logradouro, String cidade, String uf, String cep, String telefone, String email) {
         this.id = id;
         this.dataCadastro = dataCadastro;
         this.nome = nome;
-        this.cpf_Cnpj = cpf_Cnpj;
+        this.cpfcnpj = cpfcnpj;
         this.logradouro = logradouro;
         this.cidade = cidade;
         this.uf = uf;
@@ -86,12 +85,12 @@ public class Cliente {
         this.nome = nome;
     }
 
-    public String getCpf_Cnpj() {
-        return cpf_Cnpj;
+    public String getCpfcnpj() {
+        return cpfcnpj;
     }
 
-    public void setCpf_Cnpj(String cpf_Cnpj) {
-        this.cpf_Cnpj = cpf_Cnpj;
+    public void setCpfcnpj(String cpfcnpj) {
+        this.cpfcnpj = cpfcnpj;
     }
 
     public String getLogradouro() {

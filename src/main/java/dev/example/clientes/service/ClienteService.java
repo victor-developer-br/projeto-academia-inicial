@@ -44,14 +44,28 @@ public class ClienteService {
         }
     }
 
-//    public List<Cliente> findByNomeCpfCnpjCidadeUf(String nome, String cpfcnpj, String cidade, String uf) {
-//        List<Cliente> obj;
-//        if()
-//        if(!nome.equals("") && !cpfcnpj.equals("")){ obj = clienteRepository.findByNomeAndCpf_CnpjContaining(nome, cpfcnpj);  }
-//        else if(!email.equals("")) { obj = clienteRepository.findByEmailContaining(email); }
-//        else { obj = clienteRepository.findAll(); }
-//
-//        return obj;
-//    }
+    public List<Cliente> findAllCritiria(String nome, String cpfcnpj, String cidade, String uf) {
+
+        List<Cliente> obj;
+        if(!nome.equals("") && !cpfcnpj.equals("") && cidade.equals("") && uf.equals(""))
+        {
+            obj = clienteRepository.findByNomeContainingIgnoreCaseAndCpfcnpjContaining(nome, cpfcnpj);
+        }
+        else if(nome.equals("") && !cpfcnpj.equals("") && !cidade.equals("") && uf.equals(""))
+        {
+            obj = clienteRepository.findByCpfcnpjContainingAndCidadeContainingIgnoreCase(cpfcnpj, cidade);
+        }
+        else if (nome.equals("") && cpfcnpj.equals("") && !cidade.equals("") && !uf.equals(""))
+        {
+            obj = clienteRepository.findByCidadeContainingIgnoreCaseAndUfContainingIgnoreCase(cidade, uf);
+        }
+        else
+        {
+            String search = nome + cpfcnpj + cidade + uf;
+            obj = clienteRepository.findAllCriteria(search);
+        }
+
+        return obj;
+    }
     
 }

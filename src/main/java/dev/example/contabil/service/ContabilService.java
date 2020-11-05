@@ -35,7 +35,7 @@ public class ContabilService {
         List<LivroCaixa> livroCaixa = livroCaixaRepository.findByClienteId(cliente.getId());
         filtro.setId(cliente.getId());
         filtro.setNome(cliente.getNome());
-        filtro.setCpf_cnpj(cliente.getCpf_Cnpj());
+        filtro.setCpf_cnpj(cliente.getCpfcnpj());
         filtro.setTelefone(cliente.getTelefone());
 
         List<LivroCaixaDTO> livroCaixaDTOS = fromLivroCaixaDTO(livroCaixa);
@@ -61,7 +61,7 @@ public class ContabilService {
         List<LivroCaixa> livroCaixa = livroCaixaRepository.findByDataLancamentoBetweenAndClienteId(startDate, endDate, cliente.getId());
         filtro.setId(cliente.getId());
         filtro.setNome(cliente.getNome());
-        filtro.setCpf_cnpj(cliente.getCpf_Cnpj());
+        filtro.setCpf_cnpj(cliente.getCpfcnpj());
         filtro.setTelefone(cliente.getTelefone());
 
         List<LivroCaixaDTO> livroCaixaDTOS = fromLivroCaixaDTO(livroCaixa);

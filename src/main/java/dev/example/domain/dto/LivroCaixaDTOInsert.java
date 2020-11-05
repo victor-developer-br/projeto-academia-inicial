@@ -26,6 +26,7 @@ public class LivroCaixaDTOInsert {
     @NotNull
     private Double valor;
 
+
     private Integer cliente;
 
     public LivroCaixaDTOInsert() {

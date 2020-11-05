@@ -1,6 +1,5 @@
 package dev.example.livrocaixa.service;
 
-import com.sun.xml.internal.ws.handler.HandlerException;
 import dev.example.clientes.repository.ClienteRepository;
 import dev.example.domain.Cliente;
 import dev.example.domain.LivroCaixa;
@@ -8,7 +7,6 @@ import dev.example.domain.dto.LivroCaixaDTOInsert;
 import dev.example.domain.dto.LivroCaixaWithClienteDTO;
 import dev.example.exceptions.ObjectNotFoundException;
 import dev.example.livrocaixa.repository.LivroCaixaRepository;
-import org.omg.PortableInterceptor.NON_EXISTENT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -27,9 +25,16 @@ public class LivroCaixaService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    public LivroCaixa find(Integer id) {
+    public LivroCaixaWithClienteDTO find(Integer id) {
         Optional<LivroCaixa> obj = livroCaixaRepository.findById(id);
-        return obj.orElseThrow(() -> new ObjectNotFoundException("LivroCaixa não encontrado: " + id + ", Tipo: " + LivroCaixa.class.getName()));
+        if(obj.isPresent())
+        {
+            return new LivroCaixaWithClienteDTO(obj.get().getId(), obj.get().getDataLancamento(), obj.get().getDescricao(), obj.get().getTipo(), obj.get().getValor(), obj.get().getCliente().getId());
+        }
+        else
+        {
+            throw new ObjectNotFoundException("LivroCaixa não encontrado: " + id + ", Tipo: " + LivroCaixaWithClienteDTO.class.getName());
+        }
     }
 
     public List<LivroCaixa> findByClienteId(Integer id) {
@@ -50,9 +55,10 @@ public class LivroCaixaService {
     }
     
 
-    public LivroCaixa update(LivroCaixa obj) {
-        find(obj.getId());
-        return livroCaixaRepository.save(obj);
+    public LivroCaixa update(LivroCaixaDTOInsert obj) {
+        Cliente cli = clienteRepository.findById(obj.getCliente()).orElseThrow(()-> new ObjectNotFoundException("Cliente não encontrado"));
+        LivroCaixa livroCaixa = new LivroCaixa(obj.getId(), obj.getDataLancamento(), obj.getDescricao(), obj.getTipo(), obj.getValor(), cli);
+        return livroCaixaRepository.save(livroCaixa);
     }
 
     public void delete(Integer id) {

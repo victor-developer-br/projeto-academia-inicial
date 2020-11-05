@@ -19,9 +19,9 @@ public class LivroCaixaControllerApi {
     private LivroCaixaService livroCaixaService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<LivroCaixa> findById(@PathVariable Integer id)
+    public ResponseEntity<LivroCaixaWithClienteDTO> findById(@PathVariable Integer id)
     {
-        LivroCaixa obj = livroCaixaService.find(id);
+        LivroCaixaWithClienteDTO obj = livroCaixaService.find(id);
         return ResponseEntity.ok().body(obj);
     }
     @GetMapping("/clienteid/{id}")
@@ -42,10 +42,9 @@ public class LivroCaixaControllerApi {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LivroCaixa> update(@PathVariable Integer id, @Valid @RequestBody LivroCaixa livroCaixa)
+    public ResponseEntity<LivroCaixa> update(@PathVariable Integer id, @Valid @RequestBody LivroCaixaDTOInsert livroCaixa)
     {
         livroCaixaService.find(id);
-        livroCaixa.setId(id);
         livroCaixaService.update(livroCaixa);
         return ResponseEntity.noContent().build();
     }
