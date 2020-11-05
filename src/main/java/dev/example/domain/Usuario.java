@@ -35,6 +35,7 @@ public class Usuario {
 
     @Length(max = 11, message = "Este campo deve conter um máximo de 11 caracteres")
     private String telefone;
+
     private String email;
 
     @NotEmpty(message = "Preenchimento Obrigatório")

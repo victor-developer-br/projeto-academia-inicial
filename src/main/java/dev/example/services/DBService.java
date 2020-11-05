@@ -36,7 +36,7 @@ public class DBService {
                 "81984865212", "paty2020@gmail.com", "O", "A");
 
         Usuario usu3 = new Usuario(null, Utilities.ConvertDate("13/10/2020"), "Wagner Silva e Souza", "waguinho", "321654",
-                "8134765542", "paty2020@gmail.com", "O", "C");
+                "8134765542", "paty1999@gmail.com", "O", "C");
 
         usuarioRepository.saveAll(Arrays.asList(usu1, usu2, usu3));
 

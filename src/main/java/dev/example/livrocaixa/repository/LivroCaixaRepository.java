@@ -12,4 +12,5 @@ public interface LivroCaixaRepository extends JpaRepository<LivroCaixa, Integer>
 
     List<LivroCaixa> findByClienteId(Integer id);
     List<LivroCaixa> findByDataLancamentoBetweenAndClienteId(Date start, Date end, Integer id);
+
 }

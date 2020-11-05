@@ -1,19 +1,16 @@
-package dev.example.domain;
+package dev.example.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import dev.example.domain.Cliente;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.*;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.Objects;
 
-@Entity
-public class LivroCaixa {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class LivroCaixaDTOInsert {
     private Integer id;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
@@ -29,22 +26,12 @@ public class LivroCaixa {
     @NotNull
     private Double valor;
 
-    @ManyToOne
-    @JsonIgnore
-    private Cliente cliente;
+    private Integer cliente;
 
-    public LivroCaixa() {
+    public LivroCaixaDTOInsert() {
     }
 
-    public LivroCaixa(Integer id, Date dataLancamento, String descricao, String tipo, Double valor) {
-        this.id = id;
-        this.dataLancamento = dataLancamento;
-        this.descricao = descricao;
-        this.tipo = tipo;
-        this.valor = valor;
-    }
-
-    public LivroCaixa(Integer id, Date dataLancamento, String descricao, String tipo, @NotNull Double valor, Cliente cliente) {
+    public LivroCaixaDTOInsert(Integer id, Date dataLancamento, String descricao,  String tipo, Double valor, Integer cliente) {
         this.id = id;
         this.dataLancamento = dataLancamento;
         this.descricao = descricao;
@@ -93,24 +80,11 @@ public class LivroCaixa {
         this.valor = valor;
     }
 
-    public Cliente getCliente() {
+    public Integer getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setCliente(Integer cliente) {
         this.cliente = cliente;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        LivroCaixa that = (LivroCaixa) o;
-        return id.equals(that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 }
