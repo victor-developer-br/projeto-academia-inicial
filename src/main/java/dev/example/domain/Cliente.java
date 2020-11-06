@@ -11,7 +11,7 @@ import java.util.Objects;
 @Entity
 public class Cliente {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
