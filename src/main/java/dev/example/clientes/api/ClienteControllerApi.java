@@ -3,6 +3,7 @@ package dev.example.clientes.api;
 import dev.example.domain.Cliente;
 import dev.example.clientes.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/clientes")
 public class ClienteControllerApi {
+
     @Autowired
     private ClienteService clienteService;
 
@@ -32,7 +34,10 @@ public class ClienteControllerApi {
                                                          )
     {
 
-        List<Cliente> obj = clienteService.findAllCritiria(nome, cpfcnpj, cidade, uf);
+        //List<Cliente> obj = clienteService.findAllCritiria(nome, cpfcnpj, cidade, uf); //usando JPA da forma simples.
+
+        List<Cliente> obj = clienteService.findByCriteria(nome, cpfcnpj, cidade, uf);  // Usando Specification para fazer a busca.
+
         return ResponseEntity.ok().body(obj);
     }
 

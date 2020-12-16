@@ -30,7 +30,8 @@ public class UsuarioControllerApi {
                                                      @RequestParam(value = "email", defaultValue = "") String email)
     {
 
-        List<Usuario> obj = usuarioService.findByNomeOrEmail(nome, email);
+        //List<Usuario> obj = usuarioService.findByNomeOrEmail(nome, email); // com JPA Trabalhando....
+        List<Usuario> obj = usuarioService.findByStreamUsers(nome, email); // Com Stream .....
         return ResponseEntity.ok().body(obj);
     }
     @GetMapping("/login")

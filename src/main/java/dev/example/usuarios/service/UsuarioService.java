@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UsuarioService {
@@ -59,9 +60,34 @@ public class UsuarioService {
 
     public List<Usuario> findByNomeOrEmail(String nome, String email) {
         List<Usuario> obj;
-        if(!nome.equals("")){ obj = usuarioRepository.findByNomeContaining(nome);  }
+        if(!email.equals("") && !nome.equals("")) { obj = usuarioRepository.findDistinctByNomeContainingIgnoreCaseAndEmailContainingIgnoreCase(nome, email); }
         else if(!email.equals("")) { obj = usuarioRepository.findByEmailContaining(email); }
+        else if(!nome.equals("")){ obj = usuarioRepository.findByNomeContaining(nome);  }
         else { obj = usuarioRepository.findAll(); }
+        return obj;
+    }
+
+    public List<Usuario> findByStreamUsers(String nome, String email)
+    {
+        List<Usuario> obj = usuarioRepository.findAll();
+
+        if(!email.equals("") && !nome.equals("")) { obj = obj.stream()
+                .filter(n -> n.getNome().toUpperCase().contains(nome.toUpperCase()) &&
+                        n.getEmail().toUpperCase().contains(email.toUpperCase()))
+                .collect(Collectors.toList()); }
+
+        else if  (!nome.equals("")){
+            obj = obj.stream().filter(f -> f.getNome().toUpperCase().contains(nome.toUpperCase())).collect(Collectors.toList());
+        }
+
+        else if (!email.equals(""))
+        {
+            obj = obj.stream().filter(f -> f.getEmail().toUpperCase().contains(email.toUpperCase())).collect(Collectors.toList());
+        }
+        else
+        {
+            return obj;
+        }
 
         return obj;
     }
