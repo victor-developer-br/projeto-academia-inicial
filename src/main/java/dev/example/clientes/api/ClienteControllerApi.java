@@ -2,6 +2,7 @@ package dev.example.clientes.api;
 
 import dev.example.domain.Cliente;
 import dev.example.clientes.service.ClienteService;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.io.FileNotFoundException;
 import java.net.URI;
 import java.util.List;
 
@@ -41,6 +43,12 @@ public class ClienteControllerApi {
         return ResponseEntity.ok().body(obj);
     }
 
+
+    @GetMapping("/report/{format}")
+    public String gerarRelatorioCliente(@PathVariable String format) throws FileNotFoundException, JRException
+    {
+        return clienteService.exportReport(format);
+    }
 
     @PostMapping
     public ResponseEntity<Cliente> insert(@Valid @RequestBody Cliente cliente)

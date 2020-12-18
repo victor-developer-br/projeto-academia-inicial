@@ -3,6 +3,8 @@ package dev.example.clientes.service;
 import dev.example.domain.Cliente;
 import dev.example.exceptions.ObjectNotFoundException;
 import dev.example.clientes.repository.ClienteRepository;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -11,11 +13,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 @Service
 public class ClienteService {
@@ -107,5 +110,26 @@ public class ClienteService {
 
         return clienteRepository.findAll(finishedQuery);
     }
-    
+
+    //// PARTE DE RELATORIO DOS CLIENTES UTILIZANDO JASPER REPORT.
+    public String exportReport(String reportFormat) throws FileNotFoundException, JRException
+    {
+        String path = "C:\\Users\\antonio.v.tenorio\\Desktop\\report";
+        List<Cliente> clientes = clienteRepository.findAll();
+        //carrega o arquivo e compila ele.
+        File file = ResourceUtils.getFile("classpath:clientes.jrxml");
+        JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(clientes);
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("createdBy", "Antonio Tenorio");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+        if(reportFormat.equalsIgnoreCase("html")) {
+            JasperExportManager.exportReportToHtmlFile(jasperPrint, path + "\\clientes.html");
+        }
+        if(reportFormat.equalsIgnoreCase("pdf"))
+        {
+            JasperExportManager.exportReportToPdfFile(jasperPrint, path + "\\clientes.pdf");
+        }
+        return "Relatório foi gerado na pasta: " + path;
+    }
 }
